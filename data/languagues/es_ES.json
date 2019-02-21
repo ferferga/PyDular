@@ -1,0 +1,14 @@
+{
+    "welcome-first": "**¡Hola! ¡Bienvenido!**🐍\nPyDular se ha iniciado correctamente y está funcionando ⚙️\nSin embargo, no podemos empezar hasta que haya un usuario __root__ en el archivo config.json.\nAñade el ID de un usuario y reinicia PyDular desde el servidor en el que lo estés ejecutando\n\nComo referencia, tu ID es **",
+    "settings-welcome1": "¡Bienvenido de nuevo, **",
+    "settings-welcome2root": "**!\nEres el usuario __root__ de este bot. ¿Qué puedo hacer por ti ahora?",
+    "settings-button": "⚙️ Ajustes",
+    "start-modules": "🧩 Módulos",
+    "your-modules": "Aquí están tus módulos instalados. Puedes iniciar cualquiera de ellos pulsando sobre él",
+    "access_denied": "",
+    "settings-description": "",
+    "user-settings": "Ajustes de Usuarios",
+    "module-settings": "Ajustes de Módulos",
+    "pydular-settings": "🐍 Ajustes de PyDular",
+    "about": "Acerca de PyDular"
+}
