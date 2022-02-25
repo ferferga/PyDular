@@ -1,0 +1,16 @@
+CREATE TABLE customer_levels (_id INTEGER PRIMARY KEY, levelName TEXT) WITHOUT ROWID;
+CREATE TABLE assigned_user_levels (level_id INTEGER, user_id, PRIMARY KEY (level_id, user_id), FOREIGN KEY (level_id) REFERENCES customer_levels(level_id), FOREIGN KEY (user_id) REFERENCES users(_id)) WITHOUT ROWID;
+CREATE TABLE customers (_id INTEGER PRIMARY KEY, name TEXT, added_date TEXT, level INTEGER, notes TEXT, FOREIGN KEY (level) REFERENCES customer_levels(_id) ON DELETE CASCADE) WITHOUT ROWID;
+CREATE TABLE flags (_id INTEGER PRIMARY KEY, name TEXT) WITHOUT ROWID;
+CREATE TABLE flagged_customers (customer_id INTEGER, flag_id INTEGER, PRIMARY KEY(customer_id, flag_id), FOREIGN KEY (customer_id) REFERENCES customers(_id) ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (flag_id) REFERENCES customers(_id)) WITHOUT ROWID;
+CREATE TABLE order_dates (_id INTEGER PRIMARY KEY, order_date TEXT) WITHOUT ROWID;
+CREATE TABLE orders (_id INTEGER PRIMARY KEY, total_price REAL, order_time TEXT, date_id INTEGER, FOREIGN KEY(date_id) REFERENCES order_dates(_id) ON DELETE CASCADE) WITHOUT ROWID;
+CREATE TABLE permissions (user_id INTEGER PRIMARY KEY, add_customers BOOLEAN, remove_customers BOOLEAN, modify_customers BOOLEAN, add_products BOOLEAN, modify_products BOOLEAN, remove_products BOOLEAN, add_orders BOOLEAN, remove_orders BOOLEAN, create_flags BOOLEAN, manage_customer_flags BOOLEAN, manage_flags BOOLEAN, remove_flags BOOLEAN, see_flags BOOLEAN, see_finance BOOLEAN, FOREIGN KEY (user_id) REFERENCES users(id)) WITHOUT ROWID;
+CREATE TABLE product_orders (order_id INTEGER, product_id INTEGER, quantity INTEGER, PRIMARY KEY(order_id, product_id), FOREIGN KEY (order_id) REFERENCES orders(_id) ON DELETE CASCADE, FOREIGN KEY (product_id) REFERENCES products(_id) ON DELETE CASCADE) WITHOUT ROWID;
+CREATE TABLE products (_id INTEGER PRIMARY KEY, name TEXT, price REAL) WITHOUT ROWID;
+CREATE TABLE products_category (_id INTEGER PRIMARY KEY, name TEXT, parent_category INTEGER, FOREIGN KEY (parent_category) REFERENCES products_category(_id) ON DELETE CASCADE) WITHOUT ROWID;
+CREATE TABLE users (_id INTEGER PRIMARY KEY, username TEXT, name TEXT, user_role INTEGER, FOREIGN KEY (_id) REFERENCES permissions(user_id)) WITHOUT ROWID;
+CREATE TABLE businessbot_info (version REAL, db_version REAL);
+CREATE TABLE assignable_ids (table_name TEXT, id INTEGER);
+CREATE TABLE offers (_id INTEGER PRIMARY KEY, name TEXT, reduction INTEGER, product_id INTEGER, FOREIGN KEY (product_id) REFERENCES products(_id)) WITHOUT ROWID;
+CREATE TRIGGER add_user_to_permissions_table AFTER INSERT ON users BEGIN INSERT INTO permissions (user_id) VALUES(NEW._id);END
